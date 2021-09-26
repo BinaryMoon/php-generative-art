@@ -1,6 +1,4 @@
-# php-generative-art
-
-Examples of Generative Art with PHP.
+# Examples of Generative Art with PHP.
 
 I use PHP to generate pixel based artwork.
 
