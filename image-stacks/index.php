@@ -51,10 +51,16 @@ function generate_images() {
 
 		$img = imagecreatetruecolor( WIDTH, HEIGHT );
 
+		/**
+		 * Add the different layers.
+		 * The order here is important. We don't want the skin on top of the
+		 * eyes because it will cover everything up.
+		 */
 		draw_part( $img, 'skin' );
 		draw_part( $img, 'eyes' );
 		draw_part( $img, 'mouths' );
 
+		// Save the image as a png.
 		imagepng( $img, $filename );
 		imagedestroy( $img );
 
@@ -102,17 +108,19 @@ function draw_part( $image, $group ) {
 	shuffle( $parts );
 
 	/**
-	 * Loca the part for the first image.
+	 * Load the part for the first image.
+	 * I know these are png's but there are similar functions for jpg and gif.
 	 */
 	$imagePart = imagecreatefrompng( $parts[0] );
 
 	/**
 	 * Copy the layer from the loaded image to the image we are creating.
 	 * I am using imagecopyresized so that the pixelart stays sharp.
-	 * You can also use imagecopyresampled to get resampling.
+	 * You can also use imagecopyresampled to get smoother scaling.
 	 *
-	 * imagesx and imagesy gets the x and y size of the part.
-	 * I know these are 32 for my images, but they might be different for yours.
+	 * imagesx() and imagesy() gets the x and y size of the image part.
+	 * I know these sizes are 32px for my images, but they might be different
+	 * for yours.
 	 */
 	imagecopyresized( $image, $imagePart, 0, 0, 0, 0, WIDTH, HEIGHT, imagesx($imagePart), imagesy( $imagePart ) );
 
