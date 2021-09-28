@@ -68,6 +68,7 @@ $tile_image = imagecreatefrompng( './tiles.png' );
 generate_images();
 display_images();
 
+
 /**
  * Generate the images.
  * Doesn't really need to be in a function, this just keeps things little more organised.
@@ -95,6 +96,9 @@ function generate_images() {
 }
 
 
+/**
+ * Generate the world array.
+ */
 function generate_world() {
 
 	global $world;
@@ -211,6 +215,7 @@ function generate_world() {
 
 }
 
+
 /**
  * Draw everything.
  */
@@ -218,8 +223,9 @@ function draw_world( $img ) {
 
 	global $world;
 
-	// Loop through y first sinice we're going to work down the rows.
+	// Loop through y first since we're going to work down the rows.
 	for( $y = 0; $y < GRID_HEIGHT; $y ++ ) {
+		// Then across the columns.
 		for( $x = 0; $x < GRID_WIDTH; $x ++ ) {
 
 			$tile_x_position = $x * TILE_SIZE * MULT;
