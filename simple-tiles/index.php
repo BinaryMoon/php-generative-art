@@ -124,13 +124,17 @@ function generate_world() {
 	 * to place buildings.
 	 */
 	$directions = array( 'ns', 'ew' );
-	$grid = 4; // Maybe this could be random?
-	$road_count = ( GRID_WIDTH * GRID_HEIGHT ) * 0.03;	// Tweak the numbers until they feel good.
+	$grid = 4; // Maybe this could be a random size for each image?
+	/**
+	 * Tweak the multiplier number (0.03) until the roads match how dense you want them to be.
+	 * If you add too many roads it will be a complete grid.
+	 */
+	$road_count = ( GRID_WIDTH * GRID_HEIGHT ) * 0.03;
 
 	/**
 	 * Note there's no error checking. If c is < 1 this loop will do nothing,
-	 * but since it's not public this doesn't matter. I can tweak the multiplier
-	 * until it works as intended.
+	 * but since the coode is not meant to be run publicly this doesn't matter.
+	 * I can tweak the values until it works as intended.
 	 */
 	for ( $c = 0; $c < $road_count; $c ++ ) {
 
@@ -167,6 +171,7 @@ function generate_world() {
 			$endX = min( $endX + $length, GRID_WIDTH );
 		}
 
+		// Add the road tiles.
 		for ( $y = $startY; $y <= $endY; $y ++ ) {
 			for ( $x = $startX; $x <= $endX; $x ++ ) {
 				$world[$y][$x] = TILE_ROAD;
@@ -195,6 +200,7 @@ function generate_world() {
 		$endX = $startX + rand( 2, 4 );
 		$endY = $startY + rand( 2, 4 );
 
+		// Add the park tiles.
 		for ( $y = $startY; $y <= $endY; $y ++ ) {
 			for ( $x = $startX; $x <= $endX; $x ++ ) {
 				$world[$y][$x] = TILE_PARK;
@@ -212,6 +218,7 @@ function draw_world( $img ) {
 
 	global $world;
 
+	// Loop through y first sinice we're going to work down the rows.
 	for( $y = 0; $y < GRID_HEIGHT; $y ++ ) {
 		for( $x = 0; $x < GRID_WIDTH; $x ++ ) {
 
@@ -260,7 +267,7 @@ function draw_tile( $img, $tile_type, $x, $y ) {
 
 	imagecopyresized(
 		$img, $tile_image,						// images.
-		$x, $y,									// position on the draw image.
+		$x, $y,									// position on the image we are drawing.
 		$tile[0] * TILE_SIZE,					// X position of the tile to draw.
 		$tile[1] * TILE_SIZE,					// Y position of the tile to draw.
 		TILE_SIZE * MULT, TILE_SIZE * MULT,		// Dimensions to copy the tile to.
